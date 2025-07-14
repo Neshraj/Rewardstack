@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchLeaderboard } from '../api/leaderboardApi';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import LoadingScreen from './LoadingScreen';
 import { io } from 'socket.io-client';
 
 const socket = io(import.meta.env.VITE_SOCKET_URL);
@@ -26,13 +27,13 @@ const Leaderboard = () => {
     };
   }, [queryClient]);
 
-  if (isLoading) return <p className="mx-auto text-center">Loading leaderboard...</p>;
+  if (isLoading) return <LoadingScreen />;
 
   const topThree = users.slice(0, 3);
   const rest = users.slice(3);
 
   return (
-    <div className="rounded-2xl shadow-lg max-h-140 overflow-hidden max-w-4xl mx-auto md:max-h-134">
+    <div className="rounded-2xl shadow-lg max-h-140 overflow-hidden max-w-4xl mx-auto md:max-h-134 bg-white">
       <h2 className="text-2xl font-bold text-center text-yellow-500 mb-6">
         Wealth Ranking
       </h2>

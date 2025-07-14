@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchUsers } from '../api/userApi';
+import LoadingScreen from './LoadingScreen';
 import { fetchClaimHistory } from '../api/historyApi';
 
 const UserProfile = () => {
@@ -18,11 +19,11 @@ const UserProfile = () => {
 
   const user = users.find((u) => u._id === id);
 
-  if (loadingUsers || loadingHistory) return <p className="mx-auto text-center">Loading...</p>;
+  if (loadingUsers || loadingHistory) return <LoadingScreen />;
   if (!user) return <p>User not found</p>;
 
   return (
-    <div className="p-6 rounded-2xl shadow-md max-w-3xl mx-auto">
+    <div className="p-6 rounded-2xl shadow-md max-w-3xl mx-auto bg-white">
       <h3 className="text-xl text-yellow-500 font-semibold mb-2 text-center">Claim History</h3>
       <h2 className="text-2xl font-bold mb-2 text-yellow-500">{user.name}</h2>
       <p className="text-lg mb-4 text-yellow-700">

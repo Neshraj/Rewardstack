@@ -4,32 +4,59 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Confetti from "react-confetti";
 import { toast } from "react-toastify";
+import LoadingScreen from "./LoadingScreen";
+import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 
 const FILTER_KEY = "rewardstack-filter";
 
 const Claim = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [filter, setFilter] = useState("default");
+  const [serverAwake, setServerAwake] = useState(false);
+
+  // 🧠 Wake server only once per session
+  useEffect(() => {
+    const pingServer = async () => {
+      const alreadyPinged = sessionStorage.getItem("server-awake");
+      if (alreadyPinged === "true") {
+        setServerAwake(true);
+      } else {
+        try {
+          await axios.get(`${import.meta.env.VITE_API_URL}/ping`);
+          sessionStorage.setItem("server-awake", "true");
+          setServerAwake(true);
+        } catch (err) {
+          console.error("Server wake-up failed", err);
+        }
+      }
+    };
+
+    pingServer();
+  }, []);
+
+  // 🌐 Fetch users
   const { data: users = [], isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: fetchUsers,
+    enabled: serverAwake, // only run after server is awake
   });
 
-  const queryClient = useQueryClient();
-  const [showConfetti, setShowConfetti] = useState(false);
-  const [filter, setFilter] = useState("default");
-  const navigate = useNavigate();
-
-  // Load filter from localStorage on mount
+  // 🧠 Load filter from localStorage on mount
   useEffect(() => {
     const savedFilter = localStorage.getItem(FILTER_KEY);
     if (savedFilter) setFilter(savedFilter);
   }, []);
 
-  // Save filter to localStorage on change
+  // 💾 Save filter to localStorage on change
   useEffect(() => {
     localStorage.setItem(FILTER_KEY, filter);
   }, [filter]);
 
+  // 🟡 Claim Points Mutation
   const mutation = useMutation({
     mutationFn: claimPoints,
     onSuccess: (data) => {
@@ -38,7 +65,7 @@ const Claim = () => {
       queryClient.invalidateQueries(["history"]);
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 6000);
-      toast.success(`${data.points} points awarded! to ${data.name}`, {
+      toast.success(`${data.points} points awarded to ${data.name}!`, {
         position: "top-center",
         autoClose: 2000,
       });
@@ -67,13 +94,15 @@ const Claim = () => {
     return sorted;
   };
 
-  if (isLoading) return <p className="mx-auto text-center">Loading users...</p>;
+  // ⏳ Loading screen if server still waking
+  if (!serverAwake || isLoading) return <LoadingScreen />;
 
   return (
-    <div className="p-6 rounded-2xl text-yellow-700 shadow-xl max-w-2xl mx-auto">
+    <div className="p-6 rounded-2xl text-yellow-700 shadow-xl max-w-2xl mx-auto bg-white">
       <div className="flex flex-row justify-between items-center mb-4">
         <h2 className="text-xl text-yellow-500 font-semibold">Claim Points</h2>
 
+        {/* 🔽 Filter Dropdown */}
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
@@ -86,6 +115,7 @@ const Claim = () => {
         </select>
       </div>
 
+      {/* 📜 User List */}
       <div className="max-h-114 overflow-y-auto pr-2 scrollbar-custom md:max-h-108">
         <ul className="space-y-3">
           {getFilteredUsers().map((user) => (

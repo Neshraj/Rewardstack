@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen font-sans">
+      <div className="min-h-screen font-sans bg-gray-50">
         {/* Navigation */}
         <Navbar />
 

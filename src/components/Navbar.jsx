@@ -9,7 +9,7 @@ const Navbar = () => {
     }`;
 
   return (
-    <nav className="px-6 py-4 flex gap-4 justify-end shadow-md rounded-b-2xl bg-yellow-100">
+    <nav className="px-6 py-4 flex gap-4 justify-end shadow-md rounded-b-2xl bg-white">
       <NavLink to="/claim" className={navLinkClass}>
         Claim
       </NavLink>
