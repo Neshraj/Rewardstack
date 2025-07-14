@@ -24,7 +24,7 @@ const UserProfile = () => {
   return (
     <div className="p-6 rounded-2xl shadow-md max-w-3xl mx-auto">
       <h3 className="text-xl text-yellow-500 font-semibold mb-2 text-center">Claim History</h3>
-      <h2 className="text-2xl font-bold mb-2">{user.name}</h2>
+      <h2 className="text-2xl font-bold mb-2 text-yellow-500">{user.name}</h2>
       <p className="text-lg mb-4 text-yellow-700">
         Total Points: <strong className='text-yellow-500'>{user.totalPoints}</strong>
       </p>
