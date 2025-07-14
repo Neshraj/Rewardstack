@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { io } from 'socket.io-client';
 
-const socket = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000');
+const socket = io(import.meta.env.VITE_SOCKET_URL);
 
 const Leaderboard = () => {
   const queryClient = useQueryClient();
@@ -32,7 +32,7 @@ const Leaderboard = () => {
   const rest = users.slice(3);
 
   return (
-    <div className="rounded-2xl shadow-lg max-h-134 overflow-hidden max-w-4xl mx-auto">
+    <div className="rounded-2xl shadow-lg max-h-140 overflow-hidden max-w-4xl mx-auto md:max-h-134">
       <h2 className="text-2xl font-bold text-center text-yellow-500 mb-6">
         Wealth Ranking
       </h2>

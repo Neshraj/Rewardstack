@@ -22,7 +22,7 @@ const UserProfile = () => {
   if (!user) return <p>User not found</p>;
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-md max-w-3xl mx-auto">
+    <div className="p-6 rounded-2xl shadow-md max-w-3xl mx-auto">
       <h3 className="text-xl text-yellow-500 font-semibold mb-2 text-center">Claim History</h3>
       <h2 className="text-2xl font-bold mb-2">{user.name}</h2>
       <p className="text-lg mb-4 text-yellow-700">
@@ -32,7 +32,7 @@ const UserProfile = () => {
       
 
       {/*Scrollable history container */}
-      <div className="max-h-90 overflow-y-auto pr-2 scrollbar-custom">
+      <div className="max-h-98 overflow-y-auto pr-2 scrollbar-custom md:max-h-90">
         {history.length === 0 ? (
           <p>No claims yet</p>
         ) : (

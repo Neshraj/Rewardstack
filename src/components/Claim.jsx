@@ -86,7 +86,7 @@ const Claim = () => {
         </select>
       </div>
 
-      <div className="max-h-118 overflow-y-auto pr-2 scrollbar-custom md:max-h-108">
+      <div className="max-h-114 overflow-y-auto pr-2 scrollbar-custom md:max-h-108">
         <ul className="space-y-3">
           {getFilteredUsers().map((user) => (
             <li
