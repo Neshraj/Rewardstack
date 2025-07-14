@@ -126,14 +126,14 @@ const Claim = () => {
       {/*User List */}
       <div className="max-h-114 overflow-y-auto pr-2 scrollbar-custom md:max-h-108">
         <ul className="space-y-3 mb-10">
-          {getFilteredUsers().map((user) => (
+          {getFilteredUsers().map((user,index) => (
             <li
               key={user._id}
-              className="flex justify-between items-center p-3 rounded-lg shadow-sm hover:cursor-pointer hover:bg-yellow-100"
+              className="flex justify-between items-center p-3 rounded-lg shadow-sm hover:cursor-pointer hover:bg-yellow-100 hover:underline"
               onClick={() => navigate(`/user/${user._id}`)}
             >
               <span className="font-medium cursor-pointer hover:underline">
-                {user.name} - {user.totalPoints} pts
+                {index+1}  {user.name} - {user.totalPoints} pts
               </span>
               <button
                 onClick={(e) => {
