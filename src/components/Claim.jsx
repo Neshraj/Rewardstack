@@ -94,15 +94,23 @@ const Claim = () => {
     return sorted;
   };
 
-  // ⏳ Loading screen if server still waking
-  if (!serverAwake || isLoading) return <LoadingScreen />;
+  //Loading screen if server still waking
+  if (!serverAwake || isLoading) return <>
+  <LoadingScreen />
+  <p className="mt-4 text-yellow-700 font-medium">Waking up the server... Please wait ⏳</p>
+  </>;
+
+  //Loading screen
+  if (isLoading) return <>
+  <LoadingScreen />
+  </>;
 
   return (
     <div className="p-6 rounded-2xl text-yellow-700 shadow-xl max-w-2xl mx-auto bg-white">
       <div className="flex flex-row justify-between items-center mb-4">
         <h2 className="text-xl text-yellow-500 font-semibold">Claim Points</h2>
 
-        {/* 🔽 Filter Dropdown */}
+        {/*Filter Dropdown */}
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
@@ -115,7 +123,7 @@ const Claim = () => {
         </select>
       </div>
 
-      {/* 📜 User List */}
+      {/*User List */}
       <div className="max-h-114 overflow-y-auto pr-2 scrollbar-custom md:max-h-108">
         <ul className="space-y-3">
           {getFilteredUsers().map((user) => (
