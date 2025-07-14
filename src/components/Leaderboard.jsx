@@ -39,7 +39,7 @@ const Leaderboard = () => {
       </h2>
 
       {/* Top 3 Section */}
-      <div className="flex justify-center items-end gap-4 mb-4">
+      <div className="flex justify-center items-end mx-2 gap-4 mb-4">
         {/* 2nd */}
         {topThree[1] && (
           <div
@@ -91,7 +91,7 @@ const Leaderboard = () => {
 
       {/* Rest of Leaderboard */}
       <div className="max-h-96 overflow-y-auto scrollbar-custom pr-2 bg-white rounded-xl shadow-inner">
-        <ul className="space-y-2 p-2">
+        <ul className="space-y-2 p-2 mb-30">
           {rest.map((user, index) => (
             <li
               key={user._id}

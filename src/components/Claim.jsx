@@ -18,7 +18,7 @@ const Claim = () => {
   const [filter, setFilter] = useState("default");
   const [serverAwake, setServerAwake] = useState(false);
 
-  // 🧠 Wake server only once per session
+  //Wake server only once per session
   useEffect(() => {
     const pingServer = async () => {
       const alreadyPinged = sessionStorage.getItem("server-awake");
@@ -38,25 +38,25 @@ const Claim = () => {
     pingServer();
   }, []);
 
-  // 🌐 Fetch users
+  //Fetch users
   const { data: users = [], isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: fetchUsers,
     enabled: serverAwake, // only run after server is awake
   });
 
-  // 🧠 Load filter from localStorage on mount
+  //Load filter from localStorage on mount
   useEffect(() => {
     const savedFilter = localStorage.getItem(FILTER_KEY);
     if (savedFilter) setFilter(savedFilter);
   }, []);
 
-  // 💾 Save filter to localStorage on change
+  //Save filter to localStorage on change
   useEffect(() => {
     localStorage.setItem(FILTER_KEY, filter);
   }, [filter]);
 
-  // 🟡 Claim Points Mutation
+  //Claim Points Mutation
   const mutation = useMutation({
     mutationFn: claimPoints,
     onSuccess: (data) => {
@@ -125,7 +125,7 @@ const Claim = () => {
 
       {/*User List */}
       <div className="max-h-114 overflow-y-auto pr-2 scrollbar-custom md:max-h-108">
-        <ul className="space-y-3">
+        <ul className="space-y-3 mb-10">
           {getFilteredUsers().map((user) => (
             <li
               key={user._id}

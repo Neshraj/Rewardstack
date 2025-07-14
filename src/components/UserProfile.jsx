@@ -37,7 +37,7 @@ const UserProfile = () => {
         {history.length === 0 ? (
           <p>No claims yet</p>
         ) : (
-          <ul className="space-y-2">
+          <ul className="space-y-2 mb-10">
             {history.map((entry) => (
               <li
                 key={entry._id}
