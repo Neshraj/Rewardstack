@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addUser } from '../api/userApi';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddUser = () => {
   const [name, setName] = useState('');
@@ -11,14 +13,29 @@ const AddUser = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(['users']);
       queryClient.invalidateQueries(['leaderboard']);
-      alert('User added successfully!');
+      toast.success('User added successfully!', {
+        position: 'top-center',
+        autoClose: 2000,
+      });
       setName('');
     },
+    onError: () => {
+      toast.error('Failed to add user!', {
+        position: 'top-center',
+        autoClose: 2000,
+      });
+    }
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name.trim()) return alert('Name cannot be empty');
+    if (!name.trim()) {
+      toast.warning('Name cannot be empty', {
+        position: 'top-center',
+        autoClose: 2000,
+      });
+      return;
+    }
     mutation.mutate(name.trim());
   };
 
@@ -31,7 +48,7 @@ const AddUser = () => {
           placeholder="Enter user name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="p-2 rounded-md shadow-sm outline-0" 
+          className="p-2 rounded-md shadow-sm outline-0"
         />
         <button
           type="submit"
