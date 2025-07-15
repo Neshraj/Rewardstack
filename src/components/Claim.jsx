@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Confetti from "react-confetti";
 import { toast } from "react-toastify";
 import LoadingScreen from "./LoadingScreen";
+import LoadingServer from "./LoadindServer";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -95,10 +96,7 @@ const Claim = () => {
   };
 
   //Loading screen if server still waking
-  if (!serverAwake || isLoading) return <>
-  <LoadingScreen />
-  <p className="mt-4 text-yellow-700 font-medium">Waking up the server... Please wait ⏳</p>
-  </>;
+  if (!serverAwake || isLoading) return <LoadingServer />;
 
   //Loading screen
   if (isLoading) return <>
