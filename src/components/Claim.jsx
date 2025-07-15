@@ -127,7 +127,7 @@ const Claim = () => {
           {getFilteredUsers().map((user,index) => (
             <li
               key={user._id}
-              className="flex justify-between items-center p-3 rounded-lg shadow-sm hover:cursor-pointer hover:bg-yellow-100 hover:underline"
+              className="flex justify-between items-center p-3 rounded-lg shadow-sm hover:cursor-pointer hover:bg-yellow-100"
               onClick={() => navigate(`/user/${user._id}`)}
             >
               <span className="font-medium cursor-pointer hover:underline">
