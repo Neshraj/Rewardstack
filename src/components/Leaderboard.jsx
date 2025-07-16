@@ -95,7 +95,7 @@ const Leaderboard = () => {
           {rest.map((user, index) => (
             <li
               key={user._id}
-              className="flex justify-between items-center px-4 py-3 rounded-lg hover:bg-yellow-100 cursor-pointer shadow-sm"
+              className="flex justify-between items-center px-4 py-3 rounded-lg bg-gray-100 hover:bg-yellow-100 cursor-pointer shadow-sm"
               onClick={() => navigate(`/user/${user._id}`)}
             >
               <span className="font-medium text-yellow-800">

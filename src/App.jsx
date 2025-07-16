@@ -3,6 +3,7 @@ import Claim from './components/Claim';
 import AddUser from './components/AddUser';
 import Leaderboard from './components/Leaderboard';
 import UserProfile from './components/UserProfile';
+import LoadingServer from './components/LoadindServer';
 import Navbar from './components/Navbar';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,7 +22,7 @@ function App() {
         <main className="p-4">
           <Routes>
             {/* Default Redirect */}
-            <Route path="/" element={<Navigate to="/claim" />} />
+            <Route path="/" element={<LoadingServer />} />
 
             {/* Claim Page */}
             <Route path="/claim" element={<Claim />} />

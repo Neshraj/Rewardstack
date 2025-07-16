@@ -19,31 +19,10 @@ const Claim = () => {
   const [filter, setFilter] = useState("default");
   const [serverAwake, setServerAwake] = useState(false);
 
-  //Wake server only once per session
-  useEffect(() => {
-    const pingServer = async () => {
-      const alreadyPinged = sessionStorage.getItem("server-awake");
-      if (alreadyPinged === "true") {
-        setServerAwake(true);
-      } else {
-        try {
-          await axios.get(`${import.meta.env.VITE_API_URL}/ping`);
-          sessionStorage.setItem("server-awake", "true");
-          setServerAwake(true);
-        } catch (err) {
-          console.error("Server wake-up failed", err);
-        }
-      }
-    };
-
-    pingServer();
-  }, []);
-
   //Fetch users
   const { data: users = [], isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: fetchUsers,
-    enabled: serverAwake, // only run after server is awake
   });
 
   //Load filter from localStorage on mount
@@ -95,13 +74,13 @@ const Claim = () => {
     return sorted;
   };
 
-  //Loading screen if server still waking
-  if (!serverAwake || isLoading) return <LoadingServer />;
-
   //Loading screen
-  if (isLoading) return <>
-  <LoadingScreen />
-  </>;
+  if (isLoading)
+    return (
+      <>
+        <LoadingScreen />
+      </>
+    );
 
   return (
     <div className="p-6 rounded-2xl text-yellow-700 shadow-xl max-w-2xl mx-auto bg-white">
@@ -124,14 +103,14 @@ const Claim = () => {
       {/*User List */}
       <div className="max-h-114 overflow-y-auto pr-2 scrollbar-custom md:max-h-108">
         <ul className="space-y-3 mb-10">
-          {getFilteredUsers().map((user,index) => (
+          {getFilteredUsers().map((user, index) => (
             <li
               key={user._id}
-              className="flex justify-between items-center p-3 rounded-lg shadow-sm hover:cursor-pointer hover:bg-yellow-100"
+              className="flex justify-between items-center p-3 rounded-lg shadow-sm bg-gray-100 hover:cursor-pointer hover:bg-yellow-100"
               onClick={() => navigate(`/user/${user._id}`)}
             >
               <span className="font-medium cursor-pointer hover:underline">
-                {index+1}  {user.name} - {user.totalPoints} pts
+                {index + 1} {user.name} - {user.totalPoints} pts
               </span>
               <button
                 onClick={(e) => {
