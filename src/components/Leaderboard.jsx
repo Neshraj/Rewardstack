@@ -18,12 +18,12 @@ const Leaderboard = () => {
     queryFn: fetchLeaderboard,
   });
 
-  // ✅ Listen to real-time updates
+  //Listen to real-time updates
   useEffect(() => {
     const handlePointsClaimed = ({ name, points }) => {
       toast.success(`${name} claimed ${points} points!`, {
         position: 'top-center',
-        autoClose: 1000, // 1 second
+        autoClose: 1000, //second
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: false,
