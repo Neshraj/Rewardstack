@@ -11,7 +11,7 @@ const LoadingServer = () => {
 
     const pingServer = async () => {
       try {
-        await axios.get(`${import.meta.env.VITE_API_URL}/ping`);
+        await axios.get(`${import.meta.env.VITE_API_URL}/users`);
         setServerAwake(true);
       } catch (err) {
         console.error("Server wake-up failed", err);
