@@ -16,7 +16,7 @@ function App() {
         <Navbar />
 
         {/* Toast Notifications */}
-        <ToastContainer position="top-center" autoClose={2000} />
+        <ToastContainer position="top-center" autoClose={1000} />
 
         {/* Main Content */}
         <main className="p-4">
