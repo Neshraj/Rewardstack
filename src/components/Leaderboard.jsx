@@ -4,26 +4,40 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import LoadingScreen from './LoadingScreen';
 import { io } from 'socket.io-client';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const socket = io(import.meta.env.VITE_SOCKET_URL);
 
 const Leaderboard = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   const { data: users = [], isLoading } = useQuery({
     queryKey: ['leaderboard'],
     queryFn: fetchLeaderboard,
   });
 
-  const navigate = useNavigate();
-
-  // Listen for real-time updates via socket
+  // ✅ Listen to real-time updates
   useEffect(() => {
-    socket.on('pointsClaimed', () => {
+    const handlePointsClaimed = ({ name, points }) => {
+      toast.success(`${name} claimed ${points} points!`, {
+        position: 'top-center',
+        autoClose: 1000, // 1 second
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: 'colored',
+      });
+
       queryClient.invalidateQueries(['leaderboard']);
-    });
+    };
+
+    socket.on('pointsClaimed', handlePointsClaimed);
 
     return () => {
-      socket.off('pointsClaimed');
+      socket.off('pointsClaimed', handlePointsClaimed);
     };
   }, [queryClient]);
 
